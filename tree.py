@@ -1,6 +1,5 @@
 """Tree class and tree node class."""
 
-
 class Node(object):
     """Node in a tree."""
 
@@ -26,9 +25,7 @@ class Node(object):
             2
         """
 
-        # FIXME
-
-        pass
+        return len(self.children)   # Assuming this doesn't mean all descendants!
 
 
 class Tree(object):
@@ -93,8 +90,16 @@ class Tree(object):
 
         """
 
-        # FIXME
-        pass
+        search_queue = []
+        current = self.root
+        while current is not None and current.data != data:
+            search_queue.extend(current.children)
+            if search_queue:
+                current = search_queue.pop(0)
+            else:
+                return None
+
+        return current
 
 if __name__ == "__main__":
     import doctest
