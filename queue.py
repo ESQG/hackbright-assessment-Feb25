@@ -2,6 +2,9 @@
 
 Warning: this is not the best way to implement a Queue."""
 
+class QueueEmptyError(IndexError):
+    """Attempt to pop an empty queue."""
+
 
 class Queue(object):
     """FIFO queue."""
@@ -53,9 +56,9 @@ class Queue(object):
             3
         """
 
-        # FIXME
+        self._list.append(item)
+        return None
 
-        pass
 
     def peek(self):
         """Return but don't remove the first item in the queue.
@@ -71,10 +74,11 @@ class Queue(object):
             >>> q
             <Queue ['buy flight', 'pack', 'enjoy vacation']>
         """
+        try:
+            return self._list[0]
+        except IndexError:
+            raise QueueEmptyError()
 
-        # FIXME
-
-        pass
 
 if __name__ == "__main__":
     import doctest
