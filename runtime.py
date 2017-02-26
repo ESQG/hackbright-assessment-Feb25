@@ -106,7 +106,7 @@ def sum_zero_3(numbers):
 
     Put runtime here:
     -----------------
-    [  O(n**4) , quartic ]
+    [  O(n**4) , quartic at worst-- but generic case cubic ]
 
     Here we have a nested for loop as above, with a quadratic runtime cost, but in each step
     of the inner for loop, we have a list lookup in result.  To determine the full runtime, we
@@ -121,6 +121,21 @@ def sum_zero_3(numbers):
     Indeed I was able to construct a scenario where the length of the results list is 1/4 n**2.
     For example, if the list is [1]*k + [-1]* k, so n = 2k, then len(results) = k**2.  Thus we have
     a quartic runtime.
+
+    After emailing Henry about this, he says I should consider a generic list instead of the example above.
+    I am still concerned that the presence of duplicates could make results grow quadratically; however,
+    in most cases this will not come up, in particular, if a and -a appear in a long list, and a appears
+    again after -a, then both pairs (a, -a) and (-a, a) will be added during the first outer iteration.
+    And many pairs of numbers in a generic case won't add to results at all; so by claiming that on average
+    results grows linearly in n, we get a cubic runtime.  But I think this is inexact, so I'm leaving my 
+    quartic claim above.
+
+    Henry also said that for the future, the algorithm will also check if (x, y) not in results.
+    In that case, the length of results grows linearly in n, including as the algorithm runs, because each 
+    element of numbers can be added to a pair in results at most once.  The two lookups (x, y) not in results
+    and (y, x) not in results will then both be O(n).  Therefore the total runtime is cubic: O(n**3).
+
+
 
     """
 
