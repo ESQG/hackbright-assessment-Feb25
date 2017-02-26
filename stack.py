@@ -153,6 +153,9 @@ class Stack(object):
         except StackEmptyError:
             return True
 
+        # Or we could use the method in Queue and do:
+        # return not self._list
+
 
 if __name__ == "__main__":
     import doctest
