@@ -75,10 +75,30 @@ class Stack(object):
             >>> s.length()
             3
         """
+        
+        # I think the most efficient method is
+        # return len(self._list)
 
-        # FIXME
+        # but, in the interest of using the abstract data type,
+        # I will instead pop things onto a new stack,
+        # then back onto the old stack after counting,
+        # so although the new stack is reversed,
+        # the old stack is re-formed as it should be.
 
-        pass
+        if self.is_empty():
+            return 0
+        backup_copy = Stack()
+
+        length = 0
+        for item in self:
+            backup_copy.append(item)
+            length += 1
+
+        for item in backup_copy:
+            self.append(item)
+
+        return length
+
         
     def empty(self):
         """Empty stack::
@@ -97,9 +117,17 @@ class Stack(object):
             0
         """
 
-        # FIXME
+        # I think the most efficient method is to re-initialize:
+        self._list = []
+        return None
 
-        pass
+        # But, I would say we could also do:
+        # while not self.is_empty():
+        #     self.pop()
+        # return None
+        # I think though that with any implementation I've seen, there would be a more
+        # efficient way than popping everything off.  Like for a linked list,
+        # we could just set the head to None.  So I'm keeping the above code this time.
 
     def is_empty(self):
         """Is stack empty?
@@ -117,9 +145,14 @@ class Stack(object):
             False
         """
 
-        # FIXME
+        try:
+            item = self.pop()
+            self.append(item)
+            return False
 
-        pass
+        except StackEmptyError:
+            return True
+
 
 if __name__ == "__main__":
     import doctest
