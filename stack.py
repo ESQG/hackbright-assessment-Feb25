@@ -91,11 +91,11 @@ class Stack(object):
 
         length = 0
         for item in self:
-            backup_copy.append(item)
+            backup_copy.push(item)
             length += 1
 
         for item in backup_copy:
-            self.append(item)
+            self.push(item)
 
         return length
 
@@ -147,7 +147,7 @@ class Stack(object):
 
         try:
             item = self.pop()
-            self.append(item)
+            self.push(item)
             return False
 
         except StackEmptyError:
