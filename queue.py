@@ -57,7 +57,6 @@ class Queue(object):
         """
 
         self._list.append(item)
-        return None
 
 
     def peek(self):

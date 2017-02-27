@@ -119,7 +119,6 @@ class Stack(object):
 
         # I think the most efficient method is to re-initialize:
         self._list = []
-        return None
 
         # But, I would say we could also do:
         # while not self.is_empty():
