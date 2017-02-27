@@ -117,16 +117,21 @@ class Stack(object):
             0
         """
 
-        # I think the most efficient method is to re-initialize:
-        self._list = []
-
-        # But, I would say we could also do:
+        # I thought of doing this:
         # while not self.is_empty():
         #     self.pop()
         # return None
         # I think though that with any implementation I've seen, there would be a more
         # efficient way than popping everything off.  Like for a linked list,
         # we could just set the head to None.  So I'm keeping the above code this time.
+
+        # But also, after looking at the queue file, it seems we might need to return a list
+        # of the items on the stack before emptying it.  So, I will simply suggest using the
+        # same method.  I'm not sure if we want the top of the stack first, but let's say we do.
+        remaining_items = reversed(self._list)
+        self._list = []
+        return list(remaining_items)
+
 
     def is_empty(self):
         """Is stack empty?
