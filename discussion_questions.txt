@@ -1,0 +1,90 @@
+Runtime
+
+    1. When calculating the Big O notation for a particular algorithm, it’s necessary to consider the length of time it takes for the algorithm to run as the algorithm’s workload approaches infinity. You can think of the workload as the number of tasks required to complete a job. What determines the workload of figuring out whether your box of animal crackers contains an elephant?
+
+    My algorithm would be to take one animal cracker out of the box at a time, look at it, and see if it's an elephan.  So, the size of the box determines the workload, with a worst-case scenario where there are no elephants or there's one at the bottom of the box.  (O(n))
+
+    2. Order the following runtimes in descending order of efficiency (that is, fastest runtimes first, slowest last) as n approaches infinity:
+
+        O(2**n)
+
+        O(n**2)
+
+        O(n log n)
+
+        O(n)
+
+        O(log n)
+
+        O(1)
+
+Stacks and Queues
+
+    1. In the following cases, would a stack or queue be a more appropriate data structure?
+
+        The process of loading and unloading pallets onto a flatbed truck
+
+            A stack would be more appropriate, as the term suggests: the first pallets loaded in would be placed on the bottom of the back of the truck, and would be the last ones taken out. (FILO)
+
+        Putting bottle caps on bottles of beer as they roll down an assembly line
+
+            A queue would be appropriate, again as the term assembly line suggests.  The first bottles to arrive are the first to be capped.  Allowing uncapped bottles to pile up until the last one has arrived would be tremendously impractical.
+
+        Calculating the solution to this mathematical expression: 2 + (7 * 4) - (3 / 2)
+
+            I would use a stack, as we read left to right, but the addition 2 + cannot be performed before determining what other operations take precedence.  The parentheses clarify this, but to evaluate the entire expression we are best off keeping track of all the inputs until we have seen the last one.
+
+    2. Describe two more situations where a queue would be an appropriate data structure.
+        
+        A queue would be an appropriate data structure for food service workers in a kitchen or cafe, and I've seen them use it.  Not only are the customers queued, but the orders themselves are queued after being placed, and the first one placed is usually the first one to begin processing.  Sometimes this is optimized in various ways, including separating components of each customer's order into queues for different appliances.  But a queue is a good starting approximation.
+        
+        A queue is also appropriate for database changes in a transaction.  The commands should be run in the order they are entered; so if new data is inserted, it can be accessed and altered by later commands.
+
+    3. Describe two more situations where a stack would be an appropriate data structure.
+
+        I would use a stack if I wanted to be able to insert something somewhere in the middle.  That is, suppose I had an ordered linked list L and wanted to insert an item A in it, in order.  I would make a new stack S, then peek and pop items off L onto S until A was between the top of L and the top of S.  Then I would push A onto L, and pop items from S back onto L.  This ability to "change your mind" about taking elements off, i.e. pop a sequence of items off and then put them back the way you found them, is not something I could do with queues; if L were a queue, I'd have to dequeue everything and requeue it with the new item in the right place.
+
+        I would also make a stack to implement a recursive algorithm.  The call stack of functions already does that, in Python and any language I know of, but one could write it directly.  We talked about this in the Trees lecture when implementing breadth-first search; I would have written a for loop with a recursive function, but we were shown how to manage a search stack directly.
+
+Linked Lists
+
+    1. Given the linked list below, which are the nodes? What is the data for each node? Where is the head? Where is the tail? (Please be as specific as possible — exactly which parts of the diagram correspond to each part? Arrows? Boxes? Text?)
+
+    (Graphic: A pair of boxes, containing words LLIST and head respectively; head points to another pair, Apple and next, which points to Berry and next, which points to Cherry and next, which points to None.)
+
+        The first pair of boxes need not be a node: it's the reference for the linked list itself, with a head pointing to the first node on the lists.  The head points to (i.e. is) a node whose data is "Apple".  That is, the outline of two boxes is the first node, and the labels "Apple" and "Next" are the contents of the node.  Similarly with "Berry" and "Cherry".  The arrow from "next" to the box containing "Cherry" specifies that the label next in the first node, refers to the next node.  The next two nodes on the list are one with data "Berry" and one with data "Cherry".  The one with data "Cherry" points to None.
+
+        The tail is not shown in this linked list, that is, it is represented as not having a pointer to the tail; however, the node with data "Cherry" should be the tail if it were shown.
+
+        So boxes represent nodes, quoted text represents data, and italicized text plus the arrows represent the "next" pointers and the "head" pointer.  Finally the bold allcaps LLIST is the variable name (reference to) the linked list.
+
+    2. What’s the difference between doubly- and singly-linked lists?
+
+        In singly-linked lists, each node contains one pointer, and therefore the list may only be traversed in one direction.  For doubly-linked lists, each node contains two pointers, in particular, it points to the other two nodes that point to it (or to None in the case of the head or the tail); they can be traversed in either direction.
+
+    3. Why is it faster to append to a linked list if we keep track of the tail as an attribute?
+
+        If we do not keep track of the tail, we must find it by traversing the whole list before appending, which is an O(n) operation.  By keeping track of the tail, that becomes O(1), at the cost of only one extra operation (i.e. moving the tail pointer) when appending.
+
+
+Trees
+
+    (Graphic: Tree {'food': 
+                      {'italian': 
+                          {'lasagna': [], 
+                          'pizza': ['thin crust', 'Chicago-style', 'New York style', 'Sicilian']}, 
+                      {'indian': ['tikka masala', 'saag']}, 
+                      {'mexican': ['burritos', 'tacos', enchiladas']}
+                      })
+
+    1. Given the tree above, in what order would a Breadth First Search (BFS) algorithm visit each node until finding burritos (starting at food)? Just list the order of nodes visited; no need to recreate the state of the algorithm data in your answer.
+
+        In our implementation of Breadth First Search using queues (and lists to store the children in left to right order), the search will be left-to-right as well as depth first.  So we get food, Italian, Indian, Mexican, lasagna, pizza, tikka masala, saag, and finally burritos.
+
+    2. Given the tree above, in what order would a Depth First Search (DFS) algorithm visit each node until finding Chicago-style (starting at food)? Just list the order of nodes visited; no need to recreate the state of the algorithm data in your answer.
+
+        In our implementation of the Depth First Search, using a stack, it will be right-to-left as well as depth first.  So the nodes we visit in order are food, Mexican, enchiladas, tacos, burritos, Indian, saag, tikka masala, Italian, pizza, Sicilian, New York-style, and finally Chicago-style.
+
+    3. How is a binary search tree different from other trees?
+
+        In a binary search tree, each node can have up to two children, making it a binary tree.  But furthermore, it is ordered in such a way as to enable a binary search algorithm among the data in the tree, for some target: when landing at one node, if it is not the target of the search, the order structure in the tree will indicate which of the two children the algorithm must proceed to.  This is accomplished by having nodes whose data admits a total ordering, and then requiring that the data on each node's left child come before that on the node itself, and the data on the node's right child must come after that on the node itself.  Then in the search algorithm, one checks the current node's data against the target data, and proceeds to the left child if the current node is too high (in the order), or the right child if too low.
